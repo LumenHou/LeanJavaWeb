@@ -1,0 +1,13 @@
+server:
+  port: 8083
+
+name: zhangsan
+
+city:
+  - haerbin
+  - wuxi
+
+person:
+  age: 12
+  name: 曹优
+  sex: Fameal

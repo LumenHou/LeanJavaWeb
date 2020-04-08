@@ -12,3 +12,15 @@
     2. 自动配置
     
 编写了第一个hello boot程序
+
+Spring Boot程序必须继承以下maven
+```xml    
+<parent>
+     <groupId>org.springframework.boot</groupId>
+     <artifactId>spring-boot-starter-parent</artifactId>
+     <version>2.0.1.RELEASE</version>
+</parent>
+```
+
+`@SpringBootApplication` 注解标记是一个SpringBoot引导类
+会自动扫描当前package及以下所有package的所有类, 并注册为bean

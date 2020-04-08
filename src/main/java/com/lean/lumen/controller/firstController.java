@@ -10,6 +10,6 @@ public class firstController {
     @RequestMapping("/test")
     @ResponseBody
     public String test(){
-        return "lumen first boot";
+        return "lumen first boot13";
     }
 }
