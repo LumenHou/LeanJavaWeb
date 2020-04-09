@@ -1,13 +1,18 @@
 server:
   port: 8083
 
-name: zhangsan
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+  redis:
+    hots: 127.0.0.1
+    port: 6379
 
-city:
-  - haerbin
-  - wuxi
 
-person:
-  age: 12
-  name: 曹优
-  sex: Fameal
+mybatis:
+  type-aliases-package: com.lean.lumen
+  mapper-locations: classpath:mapper/*.xml
+
