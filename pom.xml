@@ -7,12 +7,13 @@
     <modules>
         <module>SpringLean</module>
         <module>SpringBootLean01</module>
+        <module>SpringBootProjectLean</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>
+        <version>2.1.4.RELEASE</version>
     </parent>
 
     <groupId>com.lean.lumen</groupId>
@@ -27,8 +28,6 @@
 
 
     <dependencies>
-        <!--web起步依赖-->
-
 
         <dependency>
             <groupId>mysql</groupId>
@@ -43,15 +42,6 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
     <repositories>
         <repository>
