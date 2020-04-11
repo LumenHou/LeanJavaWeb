@@ -2,6 +2,8 @@ package com.lean.lumen.controller;
 
 import com.lean.lumen.dto.AccessTokenDTO;
 import com.lean.lumen.dto.GithubUserDTO;
+import com.lean.lumen.mapper.UserMapper;
+import com.lean.lumen.model.User;
 import com.lean.lumen.provider.GithubProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Controller
 public class AuthContorller {
@@ -26,10 +31,15 @@ public class AuthContorller {
     @Resource
     private GithubProvider githubProviderp;
 
+    @Resource
+    private UserMapper userMapper;
+
     @GetMapping("callback")
     public String callback(@RequestParam(name = "code")String code,
                            @RequestParam(name = "state")String state,
-                            HttpServletRequest request){
+                           HttpServletResponse response){
+        //HttpServletRequest Spring可以自动获取这两个对象, 并放入上下文
+        //HttpServletResponse
 
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
@@ -41,7 +51,17 @@ public class AuthContorller {
         String accessToken = githubProviderp.getAccessToken(accessTokenDTO);
         GithubUserDTO user = githubProviderp.getUser(accessToken);
         if(null != user){
-            request.getSession().setAttribute("user", user);
+            // 如果查询到用户了, 就存入数据库
+            User newUser = new User();
+            newUser.setAccountId(String.valueOf(user.getId()));
+            newUser.setName(user.getName());
+            String token = UUID.randomUUID().toString();
+            newUser.setToken(token);
+            newUser.setGmt_Created(System.currentTimeMillis());
+            newUser.setGmt_modified(newUser.getGmt_Created());
+            userMapper.insert(newUser);
+
+            response.addCookie(new Cookie("token", token));
         }
         return "redirect:/";
     }

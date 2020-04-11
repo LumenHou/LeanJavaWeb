@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+//提供第三方功能, 放入provider中
 @Component
 public class GithubProvider {
 
+    //通过okHttp来获取Github的accessToken
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
         MediaType header = MediaType.get("application/json; charset=utf-8");
 
@@ -34,6 +36,7 @@ public class GithubProvider {
         }
     }
 
+    //通过accessToken拿到对应的用户信息, 并返回
     public GithubUserDTO getUser(String accesstoken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
