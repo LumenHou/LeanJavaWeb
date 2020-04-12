@@ -59,10 +59,28 @@ public class AuthContorller {
             newUser.setToken(token);
             newUser.setGmt_Created(System.currentTimeMillis());
             newUser.setGmt_modified(newUser.getGmt_Created());
+            newUser.setAvatar_url(user.getAvatar_url());
             userMapper.insert(newUser);
 
             response.addCookie(new Cookie("token", token));
         }
         return "redirect:/";
+    }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        System.out.println("in log out");
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null){
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")){
+                    cookie.setValue(null);
+                }
+            }
+        }
+        request.getSession().setAttribute("user", null);
+
+        return "index";
     }
 }

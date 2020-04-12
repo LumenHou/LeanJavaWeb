@@ -50,7 +50,7 @@ public class GithubProvider {
         try (Response execute = client.newCall(request).execute()){
             String body = execute.body().string();
             userDTO = JSON.parseObject(body, GithubUserDTO.class);
-            System.out.println(userDTO);
+            //System.out.println(userDTO);
         } catch (IOException e) {
             userDTO.setName("lumen");
             System.out.println("connect reset");
