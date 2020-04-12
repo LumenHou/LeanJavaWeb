@@ -1,9 +1,7 @@
 package com.lean.lumen.mapper;
 
 import com.lean.lumen.model.Question;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -15,5 +13,6 @@ public interface QuestionMapper {
     void create(Question question);
 
     @Select("select * from question")
-    List<Question> list();
+    List<Question> list(@Param("pageNum") int pageNum,
+                        @Param("pageSize") int pageSize);
 }

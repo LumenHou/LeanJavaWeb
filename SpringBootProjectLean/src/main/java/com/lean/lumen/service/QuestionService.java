@@ -1,5 +1,7 @@
 package com.lean.lumen.service;
 
+import com.github.pagehelper.Page;
+import com.lean.lumen.dto.PaginationDTO;
 import com.lean.lumen.dto.QuestionDTO;
 import com.lean.lumen.mapper.QuestionMapper;
 import com.lean.lumen.mapper.UserMapper;
@@ -22,9 +24,13 @@ public class QuestionService {
     UserMapper userMapper;
     
 
-    public List<QuestionDTO> question_list(){
+    public PaginationDTO<QuestionDTO> question_list(Integer pageNum, Integer pageSize){
         List<QuestionDTO> list = new ArrayList<>();
-        List<Question> questions = questionMapper.list();
+        List<Question> questions = questionMapper.list(pageNum, pageSize);
+        Page questions1 = (Page)questions;
+        Long total = questions1.getTotal();
+
+        PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO(total.intValue(), pageNum, pageSize);
 
         for (Question question : questions) {
             User user = userMapper.findById(question.getCreator());
@@ -34,8 +40,9 @@ public class QuestionService {
 
             list.add(questionDTO);
         }
+        paginationDTO.setItems(list);
 
-        return list;
+        return paginationDTO;
     }
 
 }

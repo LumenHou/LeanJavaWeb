@@ -12,7 +12,6 @@ spring:
     hots: 127.0.0.1
     port: 6379
 
-
 github:
   client:
     id: "3b6ffe53042b2e77e356"
@@ -23,12 +22,8 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-logging:
-  file:
-    max-history: 15
-    max-size: 100MB
-  level:
-    root: info
-    com:
-      lean:
-        lumen: info
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
