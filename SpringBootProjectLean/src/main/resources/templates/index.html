@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <meta name="referrer" content="no-referrer" />
     <title>论坛</title>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -27,14 +28,14 @@
                 <div class="media" th:each="question: ${questions}">
                     <div class="media-left">
                         <a href="#"> <!-- http://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg -->
-                            <img class="media-object img-circle" th:src="${question.user.avatar_url}">
+                            <img class="media-object img-circle" th:src="${question.user.avatarUrl}">
                         </a>
                     </div>
                     <div class="media-body" >
                         <h4 class="media-heading"><span th:text="${question.title}"></span></h4>
                         点击xxx<br>
-                        <span class="text-desc"><span th:text="${question.comment_count}">评论</span>, <span th:text="${question.view_count}" ></span> 浏览,
-                            <span th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd')}"></span>发布的</span>
+                        <span class="text-desc"><span th:text="${question.commentCount}">评论</span>, <span th:text="${question.viewCount}" ></span> 浏览,
+                            <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>发布的</span>
                     </div>
                     
                 </div>

@@ -4,7 +4,7 @@ server:
 
 spring:
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/community?useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
@@ -18,3 +18,17 @@ github:
     id: "3b6ffe53042b2e77e356"
     secret: "d03a893e5e754d2ffb0ac66a76cacbc49c1eaf6d"
   redirecturi: "http://localhost:8889/callback"
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  file:
+    max-history: 15
+    max-size: 100MB
+  level:
+    root: info
+    com:
+      lean:
+        lumen: info

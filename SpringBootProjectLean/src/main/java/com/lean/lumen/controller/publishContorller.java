@@ -43,8 +43,8 @@ public class publishContorller {
         }
 
         question.setCreator(user.getId());
-        question.setGmt_create(System.currentTimeMillis());
-        question.setGmt_modified(question.getGmt_create());
+        question.setGmtCreate(System.currentTimeMillis());
+        question.setGmtModified(question.getGmtCreate());
 
         questionMapper.create(question);
         return "redirect:/";

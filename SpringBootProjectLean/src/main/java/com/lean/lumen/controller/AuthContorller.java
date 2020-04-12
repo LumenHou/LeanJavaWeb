@@ -57,9 +57,9 @@ public class AuthContorller {
             newUser.setName(user.getName());
             String token = UUID.randomUUID().toString();
             newUser.setToken(token);
-            newUser.setGmt_Created(System.currentTimeMillis());
-            newUser.setGmt_modified(newUser.getGmt_Created());
-            newUser.setAvatar_url(user.getAvatar_url());
+            newUser.setGmtCreate(System.currentTimeMillis());
+            newUser.setGmtModified(newUser.getGmtCreate());
+            newUser.setAvatarUrl(user.getAvatar_url());
             userMapper.insert(newUser);
 
             response.addCookie(new Cookie("token", token));
