@@ -12,7 +12,12 @@ public interface QuestionMapper {
             "values (#{title}, #{description}, #{gmt_create}, #{gmt_modified}, #{creator}, #{tag})")
     void create(Question question);
 
-    @Select("select * from question")
+    @Select("select * from question order by gmt_create desc")
     List<Question> list(@Param("pageNum") int pageNum,
+                        @Param("pageSize") int pageSize);
+
+    @Select("select * from question where creator=#{creator} order by gmt_create desc")
+    List<Question> listById(@Param("creator") Integer creator,
+                        @Param("pageNum") int pageNum,
                         @Param("pageSize") int pageSize);
 }
