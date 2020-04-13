@@ -38,33 +38,33 @@
                             <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>发布的</span>
                     </div>
                 </div>
-                <span th:text="${questions}"></span>
+<!--                <span th:text="${questions}"></span>-->
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li th:if="${questions?.getshowFirstPage()}">
+                        <li th:if="${questions?.showFirstPage}">
                             <a th:href="@{/(page=1,search=${search})}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;&lt;</span>
                             </a>
                         </li>
-                        <li th:if="${pagination?.showPrevious}">
-                            <a th:href="@{/(page=${pagination.current-1},search=${search})}" aria-label="Previous">
+                        <li th:if="${questions?.showPrevious}">
+                            <a th:href="@{/(page=${questions.current-1},search=${search})}" aria-label="Previous">
                                 <span aria-hidden="true">&lt;</span>
                             </a>
                         </li>
 
 
-                        <li th:each="page : ${pagination?.pages}" th:class="${pagination.current == page} ? 'active' : ''">
+                        <li th:each="page : ${questions?.pages}" th:class="${questions.current == page} ? 'active' : ''">
                             <a  th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
                         </li>
 
 
-                        <li th:if="${pagination?.showNext}">
-                            <a th:href="@{/(page=${pagination.current+1},search=${search})}" aria-label="Next">
+                        <li th:if="${questions?.showNext}">
+                            <a th:href="@{/(page=${questions.current+1},search=${search})}" aria-label="Next">
                                 <span aria-hidden="true">&gt;</span>
                             </a>
                         </li>
-                        <li th:if="${pagination?.showEndPage}">
-                            <a th:href="@{/(page=${pagination.total},search=${search})}" aria-label="Next">
+                        <li th:if="${questions?.showEndPage}">
+                            <a th:href="@{/(page=${questions.total},search=${search})}" aria-label="Next">
                                 <span aria-hidden="true">&gt;&gt;</span>
                             </a>
                         </li>
