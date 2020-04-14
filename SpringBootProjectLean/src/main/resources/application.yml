@@ -19,6 +19,9 @@ github:
   redirecturi: "http://localhost:8889/callback"
 
 mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+  #  type-aliases-package: com.lean.lumen
   configuration:
     map-underscore-to-camel-case: true
 

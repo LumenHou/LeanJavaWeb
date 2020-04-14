@@ -2,7 +2,6 @@ package com.lean.lumen.controller;
 
 import com.lean.lumen.dto.PaginationDTO;
 import com.lean.lumen.dto.QuestionDTO;
-import com.lean.lumen.mapper.QuestionMapper;
 import com.lean.lumen.model.User;
 import com.lean.lumen.service.QuestionService;
 import org.springframework.stereotype.Controller;

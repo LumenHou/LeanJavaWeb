@@ -1,7 +1,7 @@
 package com.lean.lumen.interceptor;
 
-import com.lean.lumen.mapper.UserMapper;
 import com.lean.lumen.model.User;
+import com.lean.lumen.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserSevice userSevice;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -24,7 +24,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             for (Cookie c : cookies) {
                 if (c.getName().equals("token")) {
                     String token = c.getValue();
-                    User user = userMapper.findByToken(token);
+                    User user = userSevice.findByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }

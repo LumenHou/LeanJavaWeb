@@ -19,21 +19,23 @@ public class QuestionService {
 
     @Resource
     QuestionMapper questionMapper;
-    
+
     @Resource
     UserMapper userMapper;
-    
 
-    public PaginationDTO<QuestionDTO> question_list(Integer pageNum, Integer pageSize){
+    @Resource
+    UserSevice userSevice;
+
+    public PaginationDTO<QuestionDTO> question_list(Integer pageNum, Integer pageSize) {
         List<QuestionDTO> list = new ArrayList<>();
         List<Question> questions = questionMapper.list(pageNum, pageSize);
-        Page questions1 = (Page)questions;
+        Page questions1 = (Page) questions;
         Long total = questions1.getTotal();
 
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO(total.intValue(), pageNum, pageSize);
 
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userSevice.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -54,7 +56,7 @@ public class QuestionService {
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO(total.intValue(), pageNum, pageSize);
 
         for (Question question : questions) {
-            User user = userMapper.findById(question.getCreator());
+            User user = userSevice.findById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -70,7 +72,7 @@ public class QuestionService {
         Question question = questionMapper.getQuestionById(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
+        User user = userSevice.findById(question.getCreator());
         questionDTO.setUser(user);
 
         return questionDTO;

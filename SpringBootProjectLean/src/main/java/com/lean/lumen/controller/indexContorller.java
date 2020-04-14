@@ -2,7 +2,6 @@ package com.lean.lumen.controller;
 
 import com.lean.lumen.dto.PaginationDTO;
 import com.lean.lumen.dto.QuestionDTO;
-import com.lean.lumen.mapper.UserMapper;
 import com.lean.lumen.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +12,6 @@ import javax.annotation.Resource;
 
 @Controller
 public class indexContorller {
-
-    @Resource
-    UserMapper userMapper;
-
     @Resource
     QuestionService questionService;
 
