@@ -1,11 +1,13 @@
 package com.lean.lumen.controller;
 
-import com.lean.lumen.mapper.QuestionMapper;
+import com.lean.lumen.dto.QuestionDTO;
 import com.lean.lumen.model.Question;
 import com.lean.lumen.model.User;
+import com.lean.lumen.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.Resource;
@@ -15,10 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 public class publishContorller {
 
     @Resource
-    QuestionMapper questionMapper;
+    QuestionService questionService;
+
 
     @GetMapping("/publish")
-    public String publish(){
+    public String publish() {
         return "publish";
     }
 
@@ -46,7 +49,20 @@ public class publishContorller {
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
 
-        questionMapper.create(question);
+        questionService.createOrUpdate(question);
         return "redirect:/";
+    }
+
+
+    @GetMapping("/publish/{id}")
+    public String editQuestion(@PathVariable("id") Integer id,
+                               Model model) {
+        QuestionDTO question = questionService.getQuestionById(id);
+
+        model.addAttribute("title", question.getTitle());
+        model.addAttribute("description", question.getDescription());
+        model.addAttribute("tag", question.getTag());
+
+        return "publish";
     }
 }

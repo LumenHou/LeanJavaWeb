@@ -52,7 +52,9 @@ public class GithubProvider {
             userDTO = JSON.parseObject(body, GithubUserDTO.class);
             //System.out.println(userDTO);
         } catch (IOException e) {
-            userDTO.setName("lumen");
+            userDTO.setName("Lumen Hou");
+            userDTO.setId(20264777);
+            userDTO.setAvatar_url("http://g.hiphotos.baidu.com/zhidao/pic/item/6d81800a19d8bc3e876545f0838ba61ea8d3459e.jpg");
             System.out.println("connect reset");
 //            e.printStackTrace();
         }

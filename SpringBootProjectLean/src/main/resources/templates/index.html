@@ -27,14 +27,18 @@
 
                 <div class="media" th:each="question: ${questions.items}">
                     <div class="media-left">
-                        <a href="#"> <!-- http://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg -->
+                        <a th:href="@{'/questionDetails/'+${question.id}}">
+                            <!-- http://b-ssl.duitang.com/uploads/item/201704/10/20170410095843_SEvMy.thumb.700_0.jpeg -->
                             <img class="media-object img-circle" th:src="${question.user.avatarUrl}">
                         </a>
                     </div>
-                    <div class="media-body" >
-                        <h4 class="media-heading"><span th:text="${question.title}"></span></h4>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <a th:href="@{'questionDetails/'+${question.id}}" th:text="${question.title}"></a>
+                        </h4>
                         点击xxx<br>
-                        <span class="text-desc"><span th:text="${question.commentCount}">评论</span>, <span th:text="${question.viewCount}" ></span> 浏览,
+                        <span class="text-desc"><span th:text="${question.commentCount}">评论</span>, <span
+                                th:text="${question.viewCount}"></span> 浏览,
                             <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>发布的</span>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ import java.util.List;
 public interface QuestionMapper {
 
     @Insert("insert into question(title, description, gmt_create, gmt_modified, creator, tag) " +
-            "values (#{title}, #{description}, #{gmt_create}, #{gmt_modified}, #{creator}, #{tag})")
+            "values (#{title}, #{description}, #{gmtCreate}, #{gmtModified}, #{creator}, #{tag})")
     void create(Question question);
 
     @Select("select * from question order by gmt_create desc")
@@ -18,6 +18,15 @@ public interface QuestionMapper {
 
     @Select("select * from question where creator=#{creator} order by gmt_create desc")
     List<Question> listById(@Param("creator") Integer creator,
-                        @Param("pageNum") int pageNum,
-                        @Param("pageSize") int pageSize);
+                            @Param("pageNum") int pageNum,
+                            @Param("pageSize") int pageSize);
+
+
+    @Select("select * from question where id = #{id}")
+    Question getQuestionById(@Param("id") Integer id);
+
+
+    @Update("update question set title = #{title}, description=#{description}, gmt_modified=now(), tag=#{tag}" +
+            "where id = #{id}")
+    void updateQuestionById(Question question);
 }

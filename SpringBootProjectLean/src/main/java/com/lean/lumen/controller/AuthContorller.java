@@ -2,9 +2,9 @@ package com.lean.lumen.controller;
 
 import com.lean.lumen.dto.AccessTokenDTO;
 import com.lean.lumen.dto.GithubUserDTO;
-import com.lean.lumen.mapper.UserMapper;
 import com.lean.lumen.model.User;
 import com.lean.lumen.provider.GithubProvider;
+import com.lean.lumen.service.UserSevice;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,11 +32,12 @@ public class AuthContorller {
     private GithubProvider githubProviderp;
 
     @Resource
-    private UserMapper userMapper;
+    private UserSevice userSevice;
 
     @GetMapping("callback")
-    public String callback(@RequestParam(name = "code")String code,
-                           @RequestParam(name = "state")String state,
+    public String callback(@RequestParam(name = "code") String code,
+                           @RequestParam(name = "state") String state,
+                           HttpServletRequest request,
                            HttpServletResponse response){
         //HttpServletRequest Spring可以自动获取这两个对象, 并放入上下文
         //HttpServletResponse
@@ -60,9 +61,10 @@ public class AuthContorller {
             newUser.setGmtCreate(System.currentTimeMillis());
             newUser.setGmtModified(newUser.getGmtCreate());
             newUser.setAvatarUrl(user.getAvatar_url());
-            userMapper.insert(newUser);
 
+            User orUpdate = userSevice.createOrUpdate(newUser);
             response.addCookie(new Cookie("token", token));
+            request.getSession().setAttribute("user", orUpdate);
         }
         return "redirect:/";
     }
@@ -79,7 +81,7 @@ public class AuthContorller {
                 }
             }
         }
-        request.getSession().setAttribute("user", null);
+        request.getSession().removeAttribute("user");
 
         return "index";
     }
