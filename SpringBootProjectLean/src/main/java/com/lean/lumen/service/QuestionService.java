@@ -3,8 +3,8 @@ package com.lean.lumen.service;
 import com.github.pagehelper.Page;
 import com.lean.lumen.dto.PaginationDTO;
 import com.lean.lumen.dto.QuestionDTO;
+import com.lean.lumen.exception.CustomizeException;
 import com.lean.lumen.mapper.QuestionMapper;
-import com.lean.lumen.mapper.UserMapper;
 import com.lean.lumen.model.Question;
 import com.lean.lumen.model.User;
 import org.springframework.beans.BeanUtils;
@@ -19,9 +19,6 @@ public class QuestionService {
 
     @Resource
     QuestionMapper questionMapper;
-
-    @Resource
-    UserMapper userMapper;
 
     @Resource
     UserSevice userSevice;
@@ -70,6 +67,9 @@ public class QuestionService {
 
     public QuestionDTO getQuestionById(Integer id) {
         Question question = questionMapper.getQuestionById(id);
+        if (question == null) {
+            throw new CustomizeException("问题未找到");
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userSevice.findById(question.getCreator());
@@ -88,5 +88,10 @@ public class QuestionService {
 
     public void create(Question question) {
         questionMapper.create(question);
+    }
+
+    public void incView(Integer id) {
+        questionMapper.updateQuestionIncById(id);
+
     }
 }

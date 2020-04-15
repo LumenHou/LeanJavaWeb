@@ -21,6 +21,7 @@ public class QuestionContorller {
                            Model model) {
 
         QuestionDTO questionDTO = questionService.getQuestionById(id);
+        questionService.incView(questionDTO.getId());
         model.addAttribute("questionDetails", questionDTO);
 
         return "questionDetails";
