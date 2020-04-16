@@ -68,7 +68,7 @@ public class QuestionService {
     public QuestionDTO getQuestionById(Integer id) {
         Question question = questionMapper.getQuestionById(id);
         if (question == null) {
-            throw new CustomizeException("问题未找到");
+            throw new CustomizeException(2001, "问题未找到");
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
