@@ -5,6 +5,7 @@ import com.lean.lumen.mapper.CommentMapper;
 import com.lean.lumen.mapper.QuestionMapper;
 import com.lean.lumen.model.Comment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
@@ -17,6 +18,7 @@ public class CommentService {
     @Resource
     QuestionMapper questionMapper;
 
+    @Transactional
     public void createComment(Comment comment) {
         if (comment.getParentId() == null || comment.getParentId() == 0) {
             throw new CustomizeException(2001, "问题没有父ID");
