@@ -9,16 +9,18 @@ function post() {
     $.ajax({
         type : "post",
         url : "/comment",
-        data : {
+        contentType: "application/json",
+        data : JSON.stringify({
             "parentId" : questionId,
             "content" : content,
             "type" : 1,
             "commentator" : commentator
-        },
+        }),
         success : function (response) {
             if(response.code == 200){
                 // 局部刷新
-                window.location.reload();
+                $("#comment_section").hide();
+//                window.location.reload();
             }else{
                 if(response.code == 2003){
                     var isAccepted = confirm(response.message);
