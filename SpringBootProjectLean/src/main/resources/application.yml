@@ -25,6 +25,15 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+logging:
+  file: lumenCommunity.log
+  level:
+    root: info
+    com:
+      lean:
+        lumen:
+          mapper: debug
+
 pagehelper:
   helperDialect: mysql
   reasonable: true
