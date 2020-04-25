@@ -1,6 +1,6 @@
 package com.lean.lumen.controller;
 
-import com.lean.lumen.dto.CommentDTO;
+import com.lean.lumen.dto.CommentCreateDTO;
 import com.lean.lumen.dto.ResultDTO;
 import com.lean.lumen.model.Comment;
 import com.lean.lumen.model.User;
@@ -20,7 +20,7 @@ public class CommentController {
     private CommentService commentService;
 
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
@@ -31,10 +31,10 @@ public class CommentController {
         Comment comment = new Comment();
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        comment.setParentId(commentDTO.getParentId());
-        comment.setType(commentDTO.getType());
-        comment.setCommentator(commentDTO.getCommentator());
-        comment.setContent(commentDTO.getContent());
+        comment.setParentId(commentCreateDTO.getParentId());
+        comment.setType(commentCreateDTO.getType());
+        comment.setCommentator(commentCreateDTO.getCommentator());
+        comment.setContent(commentCreateDTO.getContent());
         comment.setLikeCount(0L);
 
         commentService.createComment(comment);

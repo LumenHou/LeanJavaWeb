@@ -22,6 +22,7 @@
 <div class="container-fluid main profile">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+<!--            正文 -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4><span class="glyphicon glyphicon-list-alt" aria-hidden="true"
                           th:text="${questionDetails.title}"></span>
@@ -41,6 +42,30 @@
                     <span class="glyphicon glyphicon glyphicon-pencil"></span>编辑
                 </a>
             </div>
+            <!--            回复-->
+            <h4>
+                <span th:text="${questionDetails.commentCount}"></span> 个回复
+            </h4>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:each="comment: ${comments}">
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object img-circle" th:src="${comment.user.avatarUrl}">
+                    </div>
+                    <div class="media-body">
+                        <span th:text="${comment.user.name}"></span>
+                        <div th:text="${comment.content}">comments</div>
+                        <div>
+                            <span class="pull-right"
+                                  th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--            回复输入框-->
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
                 <input type="hidden" id="question_id" th:value="${questionDetails.id}">
