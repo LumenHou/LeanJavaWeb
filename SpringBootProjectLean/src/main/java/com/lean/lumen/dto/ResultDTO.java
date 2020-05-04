@@ -7,16 +7,30 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResultDTO {
-
+public class ResultDTO<T> {
     private Integer code;
     private String message;
+    private T data;
 
-    public static ResultDTO errorOf(Integer Code, String message) {
-        return new ResultDTO(Code, message);
+    public static ResultDTO errOf(Integer code, String message) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(code);
+        resultDTO.setMessage(message);
+        return resultDTO;
     }
 
     public static ResultDTO okOf() {
-        return new ResultDTO(200, "操作成功");
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        return resultDTO;
+    }
+
+    public static <T> ResultDTO okOf(T t) {
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("成功");
+        resultDTO.setData(t);
+        return resultDTO;
     }
 }

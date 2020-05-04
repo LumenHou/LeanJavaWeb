@@ -28,7 +28,7 @@ public class QuestionContorller {
 
         QuestionDTO questionDTO = questionService.getQuestionById(id);
 
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByQuestionId(id, 1);
 
         questionService.incView(questionDTO.getId());
         model.addAttribute("questionDetails", questionDTO);

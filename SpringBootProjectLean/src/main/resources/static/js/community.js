@@ -19,8 +19,8 @@ function post() {
         success : function (response) {
             if(response.code == 200){
                 // 局部刷新
-                $("#comment_section").hide();
-//                window.location.reload();
+                //$("#comment_section").hide();
+                window.location.reload();
             }else{
                 if(response.code == 2003){
                     var isAccepted = confirm(response.message);
@@ -51,12 +51,13 @@ function comment(e) {
     $.ajax({
         type : "post",
         url : "/comment",
-        data : {
+        contentType: "application/json",
+        data : JSON.stringify({
             "parentId" : questionId,
             "content" : content,
             "type" : 2,
             "commentator" : commentator
-        },
+        }),
         success : function (response) {
             if(response.code == 200){
                 window.location.reload();
@@ -119,7 +120,7 @@ function collapseComments(e) {
                         "class": "menu"
                     }).append($("<span/>", {
                         "class": "pull-right",
-                        "html": moment(comment.gmtCreate).format('YYYY-MM-DD')
+                        "html": comment.gmtCreate
                     })));
 
                     var mediaElement = $("<div/>", {

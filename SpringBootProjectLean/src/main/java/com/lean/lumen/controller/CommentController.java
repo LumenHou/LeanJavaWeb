@@ -1,17 +1,16 @@
 package com.lean.lumen.controller;
 
 import com.lean.lumen.dto.CommentCreateDTO;
+import com.lean.lumen.dto.CommentDTO;
 import com.lean.lumen.dto.ResultDTO;
 import com.lean.lumen.model.Comment;
 import com.lean.lumen.model.User;
 import com.lean.lumen.service.CommentService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 public class CommentController {
@@ -40,5 +39,12 @@ public class CommentController {
         commentService.createComment(comment);
 
         return ResultDTO.okOf();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}", method = RequestMethod.GET)
+    public ResultDTO comments(@PathVariable(name = "id") Integer id) {
+        List<CommentDTO> commentDTO1s = commentService.listByQuestionId(id, 2);
+        return ResultDTO.okOf(commentDTO1s);
     }
 }

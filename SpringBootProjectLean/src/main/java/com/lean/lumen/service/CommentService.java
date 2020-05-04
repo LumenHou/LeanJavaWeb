@@ -44,26 +44,29 @@ public class CommentService {
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Integer id) {
+    public List<CommentDTO> listByQuestionId(Integer id, Integer type) {
         CommentExample example = new CommentExample();
         example.createCriteria()
                 .andParentIdEqualTo(Long.valueOf(id))
-                .andTypeEqualTo(1L); // questionType = 1
+                .andTypeEqualTo(Long.valueOf(type)); // questionType = 1
         List<Comment> comments = commentMapper.selectByExample(example);
         if (comments.size() == 0) {
             return new ArrayList<>();
         }
 
-        List<Integer> commentators = comments.stream().map(comment -> comment.getCommentator()).distinct().collect(Collectors.toList());
+        List<Integer> commentators = comments.stream().map(Comment::getCommentator).distinct().collect(Collectors.toList());
 
         UserExample userExample = new UserExample();
         userExample.createCriteria().andIdIn(commentators);
         List<User> users = userMapper.selectByExample(userExample);
-        Map<Integer, User> userMap = users.stream().collect(Collectors.toMap(user -> user.getId(), user -> user));
+        Map<Integer, User> userMap = users.stream().collect(Collectors.toMap(User::getId, user -> user));
 
         List<CommentDTO> commentDTOS = comments.stream().map(comment -> {
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment, commentDTO);
+            commentDTO.setParentId(comment.getParentId().intValue());
+            commentDTO.setType(comment.getType().intValue());
+            commentDTO.setLikeCount(comment.getLikeCount().intValue());
             commentDTO.setUser(userMap.get(comment.getCommentator()));
 
             return commentDTO;
