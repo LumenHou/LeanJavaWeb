@@ -25,6 +25,9 @@ public class UserSevice {
     }
 
     public User findByToken(String token) {
+        if (token == null || "".equals(token)) {
+            return null;
+        }
         UserExample userExample = new UserExample();
         userExample.createCriteria().andTokenEqualTo(token);
         List<User> users = userMapper.selectByExample(userExample);
@@ -38,7 +41,7 @@ public class UserSevice {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andAccountIdEqualTo(user.getAccountId());
         List<User> users = userMapper.selectByExample(userExample);
-        User dbUser = null;
+        User dbUser = new User();
         if (users.size() == 0) {
             userMapper.insert(user);
         } else {
@@ -48,7 +51,7 @@ public class UserSevice {
             dbUser.setGmtModified(System.currentTimeMillis());
 
             userExample.createCriteria()
-                    .andIdEqualTo(user.getId());
+                    .andIdEqualTo(users.get(0).getId());
 
             userMapper.updateByExampleSelective(dbUser, userExample);
         }

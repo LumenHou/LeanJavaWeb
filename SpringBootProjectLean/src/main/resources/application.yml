@@ -11,6 +11,10 @@ spring:
   redis:
     hots: 127.0.0.1
     port: 6379
+  security:
+    user:
+      name: admin
+      password: 123456
 
 github:
   client:

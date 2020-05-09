@@ -83,6 +83,6 @@ public class AuthContorller {
         }
         request.getSession().removeAttribute("user");
 
-        return "index";
+        return "redirect:/";
     }
 }
