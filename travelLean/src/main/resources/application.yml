@@ -1,0 +1,27 @@
+server:
+  port: 8889
+  application:
+    name: travels
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/travels?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+  type-aliases-package: com.lean.lumen
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    root: info
+    com:
+      lean:
+        lumen:
+          mapper: debug
