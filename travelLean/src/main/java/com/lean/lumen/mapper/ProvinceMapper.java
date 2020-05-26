@@ -1,9 +1,7 @@
 package com.lean.lumen.mapper;
 
 import com.lean.lumen.bean.Province;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -15,4 +13,10 @@ public interface ProvinceMapper {
 
     @Select("select count(*) from t_province")
     Integer countProvince();
+
+    @Insert("insert into t_province (name, tags, placecounts) values(#{name}, #{tags}, #{placecounts})")
+    void save(Province province);
+
+    @Delete("delete from t_province where id = #{id}")
+    void delete(@Param("id") Integer id);
 }

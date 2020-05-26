@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-<div id="wrap">
+<div id="app">
     <div id="header">
         <div style="float: right;padding-top: 24px">2009/11/20</div>
         <h1>旅游信息管理系统</h1>
@@ -42,13 +42,13 @@
         <form action="provincelist.html" method="post">
             <label>
                 <div class="label-text">省&emsp;份：</div>
-                <input type="text" name="pname">
+                <input type="text" name="pname" v-model="province.name">
             </label>
             <label>
                 <div class="label-text">标&emsp;签：</div>
-                <input type="text" name="ptag">
+                <input type="text" name="ptag" v-model="province.tags">
             </label>
-            <button type="submit">提 交</button>&emsp;
+            <button type="button" @click="saveProvinceInfo">提 交</button>&emsp;
             <a href="provincelist.html">返回</a>
         </form>
     </div>
@@ -58,3 +58,36 @@
 </div>
 </body>
 </html>
+
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    const app = new Vue({
+
+        el: "#app",
+        data:{
+            province:{}
+        },
+        methods:{
+            saveProvinceInfo(){
+                axios.post("http://localhost:8889/province/save",this.province)
+                .then(res => {
+                    console.log(res)
+                    if(res.data.state){
+                        alert(res.data.msg + ", click ok and togo Province Page.")
+                        location.href='./provincelist.html'
+                    }else{
+                        alert(res.data.msg + ", save error")
+                    }
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            }
+
+        }
+        });
+
+
+
+</script>

@@ -24,4 +24,13 @@ public class ProvinceService {
     public Integer count() {
         return provinceMapper.countProvince();
     }
+
+    public void saveProvince(Province province) {
+        province.setPlacecounts(0);
+        provinceMapper.save(province);
+    }
+
+    public void deleteProvince(Integer integer) {
+        provinceMapper.delete(integer);
+    }
 }
