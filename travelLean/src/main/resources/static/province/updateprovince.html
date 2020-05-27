@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-<div id="wrap">
+<div id="app">
     <div id="header">
         <div style="float: right;padding-top: 24px">2009/11/20</div>
         <h1>旅游信息管理系统</h1>
@@ -42,13 +42,13 @@
         <form action="provincelist.html" method="post">
             <label>
                 <div class="label-text">省&emsp;份：</div>
-                <input type="text" name="pname" value="北京市">
+                <input type="text" v-model="province.name">
             </label>
             <label>
                 <div class="label-text">标&emsp;签：</div>
-                <input type="text" name="ptag" value="首都、天安门">
+                <input type="text" v-model="province.tags">
             </label>
-            <button type="submit">提 交</button>&emsp;
+            <button type="button" @click=updateProvince(province)>提 交</button>&emsp;
             <a href="provincelist.html">返回</a>
         </form>
     </div>
@@ -58,3 +58,47 @@
 </div>
 </body>
 </html>
+
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            province:{},
+            id:""
+        },
+        methods:{
+            findOneProvince(id){
+                axios.post("http://localhost:8889/province/findById?id="+id)
+                .then(res => {
+                    console.log(res)
+                    this.province = res.data.data;
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            },
+            updateProvince(province){
+                axios.post("http://localhost:8889/province/updateProvince",province)
+                .then(res => {
+                    console.log(res)
+                    if(res.data.state){
+                        alert("success");
+                        location.href="./provincelist.html";
+                    }
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            }
+        },
+        created(){
+            this.id = location.href.substring(location.href.indexOf("=") +1);
+            this.findOneProvince(this.id);
+        }
+        });
+
+
+
+</script>

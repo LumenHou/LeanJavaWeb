@@ -57,4 +57,26 @@ public class ProvinceController {
         return ResultDTO.success(Boolean.TRUE, "保存成功");
     }
 
+    @PostMapping("findById")
+    public ResultDTO<Province> findById(Integer id) {
+        Province province = null;
+        try {
+            province = provinceService.findProvinceById(id);
+            return ResultDTO.success(province, "success");
+        } catch (Exception e) {
+            return ResultDTO.fail(null, "failed");
+        }
+    }
+
+    @PostMapping("updateProvince")
+    public ResultDTO<Boolean> updateProvince(@RequestBody Province province) {
+        try {
+            provinceService.updateProvince(province);
+            return ResultDTO.success(Boolean.TRUE, "success");
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return ResultDTO.fail(null, "failed");
+        }
+    }
+
 }

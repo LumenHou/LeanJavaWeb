@@ -21,6 +21,10 @@ public class ProvinceService {
         return provinceMapper.findByPage(start, size);
     }
 
+    public Province findProvinceById(Integer id) {
+        return provinceMapper.findProvince(id);
+    }
+
     public Integer count() {
         return provinceMapper.countProvince();
     }
@@ -32,5 +36,9 @@ public class ProvinceService {
 
     public void deleteProvince(Integer integer) {
         provinceMapper.delete(integer);
+    }
+
+    public void updateProvince(Province province) {
+        provinceMapper.updateProvinceById(province);
     }
 }

@@ -19,4 +19,11 @@ public interface ProvinceMapper {
 
     @Delete("delete from t_province where id = #{id}")
     void delete(@Param("id") Integer id);
+
+    @Select("select * from t_province where id = #{id}")
+    Province findProvince(@Param("id") Integer id);
+
+    @Update("update t_province set name = #{name}, tags=#{tags}, placecounts=#{placecounts} " +
+            "where id = #{id}")
+    void updateProvinceById(Province province);
 }
