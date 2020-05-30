@@ -16,4 +16,7 @@ public interface PlaceMapper {
 
     @Select("select count(*) from t_place where provinceid = #{provinceId}")
     Integer getTotalPlace(@Param("provinceId") Integer provinceId);
+
+    @Select("select name from t_province order by id")
+    List<String> getAllProvinceName();
 }

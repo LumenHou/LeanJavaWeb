@@ -1,12 +1,10 @@
 package com.lean.lumen.controller;
 
 import com.lean.lumen.bean.Place;
+import com.lean.lumen.bean.ResultDTO;
 import com.lean.lumen.service.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,5 +35,16 @@ public class PlaceController {
         result.put("size", size);
 
         return result;
+    }
+
+    @GetMapping("allProvince")
+    public ResultDTO<List<String>> getAllProvince(){
+        try {
+            List<String> allProvince = placeService.getAllProvince();
+            return ResultDTO.success(allProvince, "成功");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResultDTO.fail(null, "失败");
+        }
     }
 }

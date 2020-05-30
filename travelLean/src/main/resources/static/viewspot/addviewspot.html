@@ -62,7 +62,7 @@
     </script>
 </head>
 <body>
-<div id="wrap">
+<div id="app">
     <div id="header">
         <div style="float: right;padding-top: 24px">2009/11/20</div>
         <h1>旅游信息管理系统</h1>
@@ -99,11 +99,7 @@
             <label>
                 <div class="label-text">所属省份：</div>
                 <select name="ofprovince">
-                    <option value="1">北京市</option>
-                    <option value="2">山东省</option>
-                    <option value="3">河南省</option>
-                    <option value="4">辽宁省</option>
-                    <option value="5">广西壮族自治区</option>
+                    <option v-for="value,index in provinceNames">{{value}}</option>
                 </select>
             </label>
             <button type="submit">提 交</button>&emsp;
@@ -116,3 +112,33 @@
 </div>
 </body>
 </html>
+
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            provinceNames:[],
+        },
+        methods:{
+           findAllProvinceNames(){
+               axios.get("http://localhost:8889/place/allProvince")
+               .then(res => {
+                   console.log(res)
+                   this.provinceNames = res.data.data
+               })
+               .catch(err => {
+                   console.error(err); 
+               })
+           }
+        },
+        created(){
+            // this.findAll(1)
+            this.findAllProvinceNames();
+        }
+        });
+
+
+
+</script>

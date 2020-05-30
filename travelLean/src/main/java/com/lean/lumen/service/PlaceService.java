@@ -24,4 +24,8 @@ public class PlaceService {
     public Integer getTotal(Integer provinceId) {
         return placeMapper.getTotalPlace(provinceId);
     }
+
+    public List<String> getAllProvince(){
+        return placeMapper.getAllProvinceName();
+    }
 }
