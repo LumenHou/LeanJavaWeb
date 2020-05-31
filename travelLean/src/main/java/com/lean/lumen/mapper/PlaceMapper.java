@@ -1,9 +1,7 @@
 package com.lean.lumen.mapper;
 
 import com.lean.lumen.bean.Place;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,4 +17,11 @@ public interface PlaceMapper {
 
     @Select("select name from t_province order by id")
     List<String> getAllProvinceName();
+
+    @Insert("INSERT INTO `travels`.`t_place` (`name`, `picpath`, `hottime`, `hotticket`, `dimticket`, `placedes`, `provinceid`) " +
+            "VALUES (#{name}, NULL, #{hottime}, #{hotticket}, #{dimticket}, #{placedes}, #{provinceid})")
+    void save(Place place);
+
+    @Delete("delete t_place where id = #{id}")
+    void delete(@Param("id") Integer id);
 }

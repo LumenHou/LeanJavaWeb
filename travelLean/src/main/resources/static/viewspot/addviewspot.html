@@ -74,35 +74,35 @@
         <form action="viewspotlist.html" method="post">
             <label>
                 <div class="label-text">景&emsp;&emsp;点：</div>
-                <input type="text" name="vname">
+                <input type="text" v-model="place.name">
             </label>
             <label>
                 <div class="label-text">印象图片：</div>
                 <div style="text-align: center;padding-left: 36%">
                     <div id="upload-tip">+</div>
-                    <img src="" alt="" id="img-show" style="display: none">
-                    <input type="file" id="imgfile" style="display: none" onchange="imgfileChange()">
+                    <img src="" alt="" id="img-show" ref="pic64" style="display: none">
+                    <input type="file" id="imgfile" ref="pic" style="display: none" onchange="imgfileChange()">
                 </div>
             </label>
             <label>
                 <div class="label-text">旺季时间：</div>
-                <input type="text" name="hottime">
+                <input type="text" v-model="place.hottime">
             </label>
             <label>
                 <div class="label-text">旺季门票：</div>
-                <input type="text" name="hotprice">
+                <input type="text" v-model="place.hotticket">
             </label>
             <label>
                 <div class="label-text">淡季门票：</div>
-                <input type="text" name="normalprice">
+                <input type="text" v-model="place.dimticket">
             </label>
             <label>
                 <div class="label-text">所属省份：</div>
-                <select name="ofprovince">
-                    <option v-for="value,index in provinceNames">{{value}}</option>
+                <select name="ofprovince" v-model="place.provinceid">
+                    <option :value="index" v-for="value,index in provinceNames">{{value}}</option>
                 </select>
             </label>
-            <button type="submit">提 交</button>&emsp;
+            <button type="button" @click="save">提 交</button>&emsp;
             <a href="viewspotlist.html">返回</a>
         </form>
     </div>
@@ -120,6 +120,7 @@
         el: "#app",
         data:{
             provinceNames:[],
+            place: {},
         },
         methods:{
            findAllProvinceNames(){
@@ -131,10 +132,28 @@
                .catch(err => {
                    console.error(err); 
                })
+           },
+           save(){
+               let picBase64 = this.$refs.pic64.src;
+               console.log(picBase64);
+               this.place.picpath = this.$refs.pic64.src;
+               this.place.provinceid += 1;
+               console.log(this.place)
+
+               axios.post("http://localhost:8889/place/save",this.place)
+               .then(res => {
+                   console.log(res)
+                   if(res.data.state){
+                       alert(res.data.msg);
+                       location.href = "./viewspotlist.html"
+                   }
+               })
+               .catch(err => {
+                   console.error(err); 
+               })
            }
         },
         created(){
-            // this.findAll(1)
             this.findAllProvinceNames();
         }
         });

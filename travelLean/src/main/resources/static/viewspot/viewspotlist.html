@@ -70,12 +70,12 @@
             <tr>
                 <td rowspan="2" v-text="place.id"></td>
                 <td rowspan="2" v-text="place.name"></td>
-                <td><img src="../img/tianam.jpg" class="viewspotimg"></td>
+                <td><img :src="place.picpath" class="viewspotimg"></td>
                 <td v-text="place.hottime"></td>
                 <td v-text="place.hotticket"></td>
                 <td v-text="place.dimticket"></td>
                 <td style="text-align: center">
-                    <a href="#">删除景点</a><br>
+                    <a href="javescript:;" @click="deleteProvince(place.id)">删除景点</a><br>
                     <a href="updateviewspot.html">修改景点</a>
                 </td>
             </tr>
@@ -115,7 +115,7 @@
             id:"",
             places:[],
             page:1,
-            size:4,
+            size:3,
             totalPage:0,
             total:0,
             url:""
@@ -128,10 +128,10 @@
                    console.log(this.data)
                    this.places = res.data.places;
                    this.total   = res.data.total;
-                   if(res.data.total % 4 == 0){
-                       this.totalPage = Math.floor(res.data.total / 4);
+                   if(res.data.total % 3 == 0){
+                       this.totalPage = Math.floor(res.data.total / 3);
                    }else{
-                        this.totalPage = Math.floor(res.data.total / 4) + 1;
+                        this.totalPage = Math.floor(res.data.total / 3) + 1;
                    }
                })
                .catch(err => {
@@ -139,7 +139,7 @@
                })
             },
             deleteProvince(id){
-                axios.post("http://localhost:8889/province/delete?id="+id)
+                axios.post("http://localhost:8889/place/delete?id="+id)
                 .then(res => {
                     console.log(res)
                     if(res.data.state){

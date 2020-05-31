@@ -38,12 +38,32 @@ public class PlaceController {
     }
 
     @GetMapping("allProvince")
-    public ResultDTO<List<String>> getAllProvince(){
+    public ResultDTO<List<String>> getAllProvince() {
         try {
             List<String> allProvince = placeService.getAllProvince();
             return ResultDTO.success(allProvince, "成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+            return ResultDTO.fail(null, "失败");
+        }
+    }
+
+    @PostMapping("save")
+    public ResultDTO<Boolean> savePlace(@RequestBody Place place) {
+        try {
+            placeService.savePlace(place);
+            return ResultDTO.success(Boolean.TRUE, "成功");
+        } catch (Exception e) {
+            return ResultDTO.fail(null, "失败");
+        }
+    }
+
+    @PostMapping("delete")
+    public ResultDTO<Boolean> deletePlace(Integer id) {
+        try {
+            placeService.delete(id);
+            return ResultDTO.success(Boolean.TRUE, "成功");
+        } catch (Exception e) {
             return ResultDTO.fail(null, "失败");
         }
     }
