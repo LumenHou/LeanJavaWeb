@@ -46,5 +46,11 @@ public class PlaceService {
 
     public void delete(Integer id) {
         placeMapper.delete(id);
+
+        Place place = placeMapper.find(id);
+        Province province = provinceMapper.findProvince(place.getProvinceid());
+        province.setPlacecounts(province.getPlacecounts() - 1);
+
+        provinceMapper.updateProvinceById(province);
     }
 }

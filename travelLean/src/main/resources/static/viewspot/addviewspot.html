@@ -145,7 +145,7 @@
                    console.log(res)
                    if(res.data.state){
                        alert(res.data.msg);
-                       location.href = "./viewspotlist.html"
+                       location.href = "./viewspotlist.html?id=" + this.place.provinceid
                    }
                })
                .catch(err => {

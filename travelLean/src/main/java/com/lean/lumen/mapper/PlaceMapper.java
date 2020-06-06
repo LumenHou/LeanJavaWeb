@@ -19,9 +19,12 @@ public interface PlaceMapper {
     List<String> getAllProvinceName();
 
     @Insert("INSERT INTO `travels`.`t_place` (`name`, `picpath`, `hottime`, `hotticket`, `dimticket`, `placedes`, `provinceid`) " +
-            "VALUES (#{name}, NULL, #{hottime}, #{hotticket}, #{dimticket}, #{placedes}, #{provinceid})")
+            "VALUES (#{name}, #{picpath}, #{hottime}, #{hotticket}, #{dimticket}, #{placedes}, #{provinceid})")
     void save(Place place);
 
     @Delete("delete t_place where id = #{id}")
     void delete(@Param("id") Integer id);
+
+    @Select("select * from t_place where id = #{id}")
+    Place find(@Param("id") Integer id);
 }
