@@ -50,7 +50,7 @@
     </script>
 </head>
 <body>
-<div id="wrap">
+<div id="app">
     <div id="header">
         <div style="float: right;padding-top: 24px">2009/11/20</div>
         <h1>旅游信息管理系统</h1>
@@ -62,39 +62,34 @@
         <form action="viewspotlist.html" method="post">
             <label>
                 <div class="label-text">景&emsp;&emsp;点：</div>
-                <input type="text" name="vname" value="颐和园">
+                <input type="text" v-model="place.name">
             </label>
             <label>
                 <div class="label-text">印象图片：</div>
                 <div style="text-align: center;padding-left: 36%">
-                    <img src="../img/yihy.jpg" alt="" id="img-show">
+                    <img :src="place.picpath" alt="" ref="pic64" id="img-show">
                     <input type="file" id="imgfile" style="display: none" onchange="imgfileChange()">
                 </div>
             </label>
             <label>
                 <div class="label-text">旺季时间：</div>
-                <input type="text" name="hottime" value="4.1~10.31">
+                <input type="text" v-model="place.hottime">
             </label>
             <label>
                 <div class="label-text">旺季门票：</div>
-                <input type="text" name="hotprice" value="30">
+                <input type="text" v-model="place.hotticket">
             </label>
             <label>
                 <div class="label-text">淡季门票：</div>
-                <input type="text" name="normalprice" value="20">
+                <input type="text" v-model="place.dimticket">
             </label>
             <label>
                 <div class="label-text">所属省份：</div>
-                <select name="ofprovince">
-                    <option value="1">北京市</option>
-                    <option value="2">山东省</option>
-                    <option value="3">河南省</option>
-                    <option value="4">辽宁省</option>
-                    <option value="5">广西壮族自治区</option>
+                <select name="ofprovince" v-model="place.provinceid">
+                    <option :value="index" v-for="value,index in provinceNames">{{value}}</option>
                 </select>
             </label>
-            <button type="submit">提 交</button>&emsp;
-            <a href="viewspotlist.html">返回</a>
+            <button type="button" @click="save">提 交</button>&emsp;
         </form>
     </div>
     <div id="footer">
@@ -103,3 +98,82 @@
 </div>
 </body>
 </html>
+<script src="../js/vue.js"></script>
+<script src="../js/axios.min.js"></script>
+<script>
+    const app = new Vue({
+        el: "#app",
+        data:{
+            id:"",
+            place:{},
+            provinceNames:[]
+        },
+        methods:{
+           findPlace(id){
+               this.url = "http://localhost:8889/place/getPlace?id=" + id;
+               axios.post(this.url)
+               .then(res => {
+                   console.log(this.data)
+                   this.place = res.data.data;
+                   this.place.provinceid -= 1;
+               })
+               .catch(err => {
+                   console.error(err); 
+               })
+            },
+            deleteProvince(id){
+                axios.post("http://localhost:8889/place/delete?id="+id)
+                .then(res => {
+                    console.log(res)
+                    if(res.data.state){
+                        alert(res.data.msg);
+                        location.reload(true);
+                    }
+                })
+                .catch(err => {
+                    console.error(err); 
+                })
+            },
+            findAllProvinceNames(){
+               axios.get("http://localhost:8889/place/allProvince")
+               .then(res => {
+                   console.log(res)
+                   this.provinceNames = res.data.data
+               })
+               .catch(err => {
+                   console.error(err); 
+               })
+           },
+            save(){
+               let picBase64 = this.$refs.pic64.src;
+               console.log(picBase64);
+               this.place.picpath = this.$refs.pic64.src;
+               console.log(this.place)
+               this.place.provinceid += 1;
+
+               axios.post("http://localhost:8889/place/save",this.place)
+               .then(res => {
+                   console.log(res)
+                   if(res.data.state){
+                       alert(res.data.msg);
+                       location.href = "./viewspotlist.html?id=" + this.place.provinceid
+                   }
+               })
+               .catch(err => {
+                   console.error(err); 
+               })
+           }
+        },
+        created(){
+            // this.findAll(1)
+            this.id = location.href.substring(location.href.indexOf("=") +1);
+            this.findPlace(this.id);
+
+            this.findAllProvinceNames();
+        }
+        });
+
+
+
+
+</script>

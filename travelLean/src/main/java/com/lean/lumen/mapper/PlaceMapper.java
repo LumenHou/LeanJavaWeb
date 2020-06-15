@@ -27,4 +27,8 @@ public interface PlaceMapper {
 
     @Select("select * from t_place where id = #{id}")
     Place find(@Param("id") Integer id);
+
+    @Update("UPDATE `travels`.`t_place` SET `name`=#{name}, `picpath`=#{picpath}, `hottime`= #{hottime}, `hotticket`=#{hotticket}, `dimticket`=#{dimticket}, `placedes`=#{placedes}, `provinceid`=#{provinceid} " +
+            "WHERE (`id`=#{id});")
+    void update(Place place);
 }

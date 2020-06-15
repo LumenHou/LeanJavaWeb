@@ -67,4 +67,9 @@ public class PlaceController {
             return ResultDTO.fail(null, "失败");
         }
     }
+
+    @PostMapping("getPlace")
+    public ResultDTO<Place> getPlace(Integer id) {
+        return ResultDTO.success(placeService.findPlace(id), "");
+    }
 }

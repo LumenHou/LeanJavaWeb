@@ -36,12 +36,28 @@ public class PlaceService {
     }
 
     public void savePlace(Place place) {
-        placeMapper.save(place);
+        if (place.getId() == null) {
+            placeMapper.save(place);
 
-        Province province = provinceMapper.findProvince(place.getProvinceid());
-        province.setPlacecounts(province.getPlacecounts() + 1);
+            Province province = provinceMapper.findProvince(place.getProvinceid());
+            province.setPlacecounts(province.getPlacecounts() + 1);
 
-        provinceMapper.updateProvinceById(province);
+            provinceMapper.updateProvinceById(province);
+        } else {
+            Place oldPlace = findPlace(place.getId());
+            if (!oldPlace.getProvinceid().equals(place.getProvinceid())) {
+                Province province = provinceMapper.findProvince(place.getProvinceid());
+                province.setPlacecounts(province.getPlacecounts() + 1);
+
+                Province province2 = provinceMapper.findProvince(oldPlace.getProvinceid());
+                province2.setPlacecounts(province2.getPlacecounts() - 1);
+
+                provinceMapper.updateProvinceById(province);
+                provinceMapper.updateProvinceById(province2);
+            }
+
+            placeMapper.update(place);
+        }
     }
 
     public void delete(Integer id) {
@@ -52,5 +68,9 @@ public class PlaceService {
         province.setPlacecounts(province.getPlacecounts() - 1);
 
         provinceMapper.updateProvinceById(province);
+    }
+
+    public Place findPlace(Integer id) {
+        return placeMapper.find(id);
     }
 }

@@ -76,7 +76,7 @@
                 <td v-text="place.dimticket"></td>
                 <td style="text-align: center">
                     <a href="javescript:;" @click="deleteProvince(place.id)">删除景点</a><br>
-                    <a href="updateviewspot.html">修改景点</a>
+                    <a :href="'./updateviewspot.html?id=' + place.id">修改景点</a>
                 </td>
             </tr>
             <tr>
