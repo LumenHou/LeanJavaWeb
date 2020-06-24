@@ -1,7 +1,6 @@
 package com.lean.lumen.config;
 
 
-import com.lean.lumen.CustomerRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -33,12 +32,5 @@ public class shiroConfig {
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
         defaultWebSecurityManager.setRealm(realm);
         return defaultWebSecurityManager;
-    }
-
-    @Bean
-    public Realm getRealm() {
-        CustomerRealm customerRealm = new CustomerRealm();
-
-        return customerRealm;
     }
 }
