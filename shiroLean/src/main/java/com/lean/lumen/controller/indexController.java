@@ -1,8 +1,11 @@
 package com.lean.lumen.controller;
 
+import com.lean.lumen.bean.User;
+import com.lean.lumen.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,10 +13,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class indexController {
 
+    @Autowired
+    UserService userService;
+
+
     @GetMapping("/index")
     public String index() {
-        // 打开首页时去查询cookie, 如果查询到cookies的话, 就存入session并自动登录
         return "index";
+    }
+
+    @GetMapping("/register")
+    public String go() {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String register(User user) {
+        userService.registerUser(user);
+        return "register";
     }
 
     @PostMapping("/login")

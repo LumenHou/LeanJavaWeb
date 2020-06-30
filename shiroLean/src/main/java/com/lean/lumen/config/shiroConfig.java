@@ -19,6 +19,7 @@ public class shiroConfig {
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
 
         Map<String, String> map = new HashMap<>();
+        map.put("/register", "anon");
         map.put("/", "authc");
         map.put("/index", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
