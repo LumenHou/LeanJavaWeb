@@ -36,6 +36,8 @@ public class CustomerRealm extends AuthorizingRealm {
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String principal = (String) principals.getPrimaryPrincipal();
+
         return null;
     }
 

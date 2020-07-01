@@ -18,3 +18,18 @@ mybatis:
 shiroLean:
   salt: Salt
   length: 1024
+
+project:
+  build:
+    sourceEncoding: UTF-8
+  reporting:
+    outputEncoding: UTF-8
+
+thymeleaf:
+  version: 3.0.0.RELEASE
+
+thymeleaf-layout-dialect:
+  version: 2.0.0
+
+java:
+  version: 1.8
